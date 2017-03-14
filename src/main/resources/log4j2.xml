@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %-5p [%t] (%C:%L) %X - %m%n"/>
+        </Console>
+    </appenders>
+    <loggers>
+        <logger name="org.apache.camel.util.ObjectHelper" level="TRACE">
+            <appender-ref ref="console"/>
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="console"/>
+        </root>
+    </loggers>
+</configuration>

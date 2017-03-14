@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <camel:camelContext id="MainContext">
+
+        <camel:route id="inRoute">
+            <camel:from uri="seda:start?concurrentConsumers=120"/>
+            <!--<camel:bean beanType="org.slf4j.MDC" method="put('ID','${body.elementId}')" />
+            <camel:bean beanType="org.slf4j.MDC" method="put('COUNT_ID','${body.countId}')" />
+            <camel:bean beanType="org.slf4j.MDC" method="put('DELTA','${body.delta}')" />-->
+            <camel:log message="NEW_REQUEST"/>
+            <!--<camel:bean ref="de.goeri.learning.beans.ExampleBean" method="logSomething(${body.elementId}, 'TEST')" />-->
+            <!-- .... a lot to do here ... -->
+            <camel:to uri="seda:end"/>
+        </camel:route>
+
+        <camel:route id="outRoute">
+            <camel:from uri="seda:end?concurrentConsumers=120"/>
+            <camel:log message="THE_END"/>
+        </camel:route>
+    </camel:camelContext>
+</beans>
