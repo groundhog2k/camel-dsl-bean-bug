@@ -13,8 +13,8 @@ import java.util.UUID;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-context.xml")
-public class AppTest {
+@ContextConfiguration("classpath:camel-context-blocking.xml")
+public class AppTest_Blocking {
 
     @Produce(uri = "seda:start", context = "MainContext")
     private ProducerTemplate start;
@@ -23,7 +23,7 @@ public class AppTest {
     @DirtiesContext
     public void testApp() throws Exception {
         long millis = System.currentTimeMillis();
-        while (System.currentTimeMillis() < millis + 60000) {
+        while (System.currentTimeMillis() < millis + 10000) {
             for (int i = 0; i < 100; i++)
                 start.sendBody(new RequestData(UUID.randomUUID().toString(), String.format("%04d", i)));
             Thread.sleep(1000);
